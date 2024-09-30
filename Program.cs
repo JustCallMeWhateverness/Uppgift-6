@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace Uppgift_6
 {
@@ -11,25 +12,33 @@ namespace Uppgift_6
         static void Main(string[] args)
         {
             
-            List<string> nameList = new List<string> { "Aelin", "Dorian", "Freye", "Sam", "Eira" };
+            Dictionary<string, int> nameList = new Dictionary<string, int> 
+            {
+                {"Aelin",23},
+                {"Dorian",25},
+                {"Freye",32},
+                {"Sam",18},
+                {"Eira",12}
+            };
 
             Console.WriteLine("WELCOME TO THE LIST OF NAMES, WE HOPE YOU ENJOY YOUR STAY HERE :)");
             Console.WriteLine("\nOriginal list:");
 
-            foreach (var name in nameList)
+            foreach (KeyValuePair<string,int> kvp in nameList)
             {
-                Console.WriteLine(name);
+                Console.WriteLine("Name: {0} Age: {1}", kvp.Key, kvp.Value);
             }
-            nameList.Sort();
+            var sortByName = nameList.OrderBy(kvp => kvp.Key);
+            
             Console.WriteLine("\nSorted list:");
-            foreach (var name in nameList)
+            foreach (KeyValuePair<string,int> kvp in sortByName)
             {
-                Console.WriteLine(name);
+                Console.WriteLine("Name: {0} Age: {1} ", kvp.Key, kvp.Value);
             }
 
             Console.WriteLine("\nEnter name to search:");
             string searchName = Console.ReadLine();
-            if (nameList.Contains(searchName))
+            if (nameList.ContainsKey(searchName))
             {
                 Console.WriteLine($"{searchName} is in the list.");
             }

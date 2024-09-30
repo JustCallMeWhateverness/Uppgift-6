@@ -10,23 +10,26 @@ namespace Uppgift_6
     {
         static void Main(string[] args)
         {
-            List<string> names = new List<string> { "Aelin", "Dorian", "Freye", "Sam", "Eira" };
-            Console.WriteLine("Original list:");
+            
+            List<string> nameList = new List<string> { "Aelin", "Dorian", "Freye", "Sam", "Eira" };
 
-            foreach (var name in names)
+            Console.WriteLine("WELCOME TO THE LIST OF NAMES, WE HOPE YOU ENJOY YOUR STAY HERE :)");
+            Console.WriteLine("\nOriginal list:");
+
+            foreach (var name in nameList)
             {
                 Console.WriteLine(name);
             }
-            names.Sort();
+            nameList.Sort();
             Console.WriteLine("\nSorted list:");
-            foreach (var name in names)
+            foreach (var name in nameList)
             {
                 Console.WriteLine(name);
             }
 
             Console.WriteLine("\nEnter name to search:");
             string searchName = Console.ReadLine();
-            if (names.Contains(searchName))
+            if (nameList.Contains(searchName))
             {
                 Console.WriteLine($"{searchName} is in the list.");
             }

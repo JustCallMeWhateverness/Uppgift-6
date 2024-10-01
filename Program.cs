@@ -11,11 +11,39 @@ namespace Uppgift_6
 {
     class Program
     {
-        //Användaren kan lägga till ny person
-        public static void AddPerson(Dictionary<string, int> myDictionary)
+        //Kontroll för imatning av ålder kan nu användas på flera ställen i koden utan upprepning av kod
+        public static int ValidAge(Dictionary<string, int> myDictionary)
         {
-            Console.WriteLine("\nAdd a new person");
+            int age = 0;
+            while (true)
+            {
+                try
+                {
+                    Console.WriteLine("Enter age:");
+                    age = int.Parse(Console.ReadLine());
+                    //Om inmatningen är korrekt lämnar den loop
+                    if (age >= 0)
+                    {
+                        break;
+                    }
+                    //Fångar upp om inmatningen är ett negativt nummer
+                    else
+                    {
+                        Console.WriteLine("Age can't be negative. Enter a valid number");
+                    }
+                }
+                //Fångar upp om inmatningen ej är ett nummer
+                catch (FormatException)
+                {
+                    Console.WriteLine("Age must be a number. Enter a valid number");
+                }
+            }
+            return age;
 
+        }
+        //Kontroll av inmatning av namn kan nu användas på flera ställen i koden utan upprepning av kod
+        public static string ValidName(Dictionary<string, int> myDictionary)
+        {
             string name = "";
             while (true)
             {
@@ -37,37 +65,23 @@ namespace Uppgift_6
                     break;
                 }
             }
-            int age = 0;
-            while (true)
-            {
-                try
-                {
-                    Console.WriteLine("Enter age:");
-                    age = int.Parse(Console.ReadLine());
-                    //Om inmatningen är korrekt lämnar det loop
-                    if (age >= 0)
-                    {
-                        break;
-                    }
-                    //Fångar upp om inmatningen är ett negativt nummer
-                    else
-                    {
-                        Console.WriteLine("Age can't be negative. Enter a valid number");
-                    }
-                }
-                //Fångar upp om inmatningen ej är ett nummer
-                catch (FormatException)
-                {
-                    Console.WriteLine("Invalid input. Enter a valid number");
-                }
-            }
+            return name;
+        }
+        //Användaren kan lägga till ny person
+        public static void AddPerson(Dictionary<string, int> myDictionary)
+        {
+            Console.WriteLine("\nAdd a new person");
+
+            string name = ValidName(myDictionary);
+
+            int age = ValidAge(myDictionary);
             myDictionary.Add(name, age);
         }
         //Skriver ut den nuvarande listan
         public static void ShowAllPeople(Dictionary<string, int> myDictionary)
         {
 
-            Console.WriteLine("Current list:");
+            Console.WriteLine("\nCurrent list:");
             foreach (KeyValuePair<string, int> kvp in myDictionary)
             {
                 Console.WriteLine("Name: {0} Age: {1}", kvp.Key, kvp.Value);
@@ -78,18 +92,20 @@ namespace Uppgift_6
         {
             while (true)
             {
-                Console.WriteLine("Enter the persons name you wanna change the age of");
-                string name = Console.ReadLine();
+                Console.WriteLine("\nEnter the persons name you wanna change the age of");
+                string name = ValidName(myDictionary);
                 //Kontrollerar om namnet finns
                 if (myDictionary.ContainsKey(name))
                 {
-                    Console.WriteLine($"Enter the new age for {name}");
-                    int age = int.Parse(Console.ReadLine());
+
+                    Console.WriteLine($"The current age for {name} is {myDictionary[name]}");
+                    Console.WriteLine($"What age should {name} have instead?");
+                    int age = ValidAge(myDictionary);
                     myDictionary[name] = age;
                     break;
                 }
                 //Fångar upp om namnet inte finns
-                else if (!myDictionary.ContainsKey(name))
+                else
                 {
                     Console.WriteLine("Sorry! That name does not exist here!Try again");
                 }
@@ -111,16 +127,16 @@ namespace Uppgift_6
         public static void SearchPerson(Dictionary<string, int> myDictionary)
         {
             Console.WriteLine("\nEnter name to search:");
-            string searchName = Console.ReadLine();
+            string searchName = ValidName(myDictionary);
             //Personen finns med
             if (myDictionary.ContainsKey(searchName))
             {
-                Console.WriteLine($"{searchName} is in the list.");
+                Console.WriteLine($"A person with that name exist here! Name: {searchName} Age: {myDictionary[searchName]}");
             }
             //Personen finns inte med
             else
             {
-                Console.WriteLine($"{searchName} is not in the list.");
+                Console.WriteLine($"Sorry! {searchName} does not exist here!");
             }
         }
 
@@ -136,7 +152,7 @@ namespace Uppgift_6
                 {"Eira",12}
             };
             int menu = 0;
-            Console.WriteLine("WELCOME TO THE LIST OF NAMES, WE HOPE YOU ENJOY YOUR STAY HERE :)");
+            Console.WriteLine("WELCOME TO THE WORLD OF NAMES, WE HOPE YOU ENJOY YOUR STAY HERE :)");
             Console.WriteLine("\nOriginal list:");
             //Skriver ut alla namn & deras ålder med en foreach loop
             foreach (KeyValuePair<string, int> kvp in nameList)
@@ -186,12 +202,14 @@ namespace Uppgift_6
                         menu = 0;
                         break;
                     default:
-                        Console.WriteLine("Invalid choice.Try again");
+                        Console.WriteLine("Invalid input.Try again!");
                         break;
                 }
             } while (menu != 0);
 
+            Console.WriteLine("Press any key to exit....");
             Console.ReadKey();
+
         }
     }
 }

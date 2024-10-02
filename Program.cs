@@ -9,6 +9,7 @@ using System.Xml.Serialization;
 
 namespace Uppgift_6
 {
+    //Lagt till Console.Clear för att simulera nytt fönster när användaren väljer ett alternativ i menyn för att göra programmet mer tydligt & användarvänligt
     class Program
     {
         //Kontroll för imatning av ålder kan nu användas på flera ställen i koden utan upprepning av kod
@@ -26,7 +27,7 @@ namespace Uppgift_6
                     {
                         break;
                     }
-                    //Fångar upp om inmatningen är ett negativt nummer
+                    //Fångar upp om inmatningen är ett negativt tal
                     else
                     {
                         Console.WriteLine("Age can't be negative. Enter a valid number");
@@ -70,37 +71,48 @@ namespace Uppgift_6
         //Användaren kan lägga till ny person
         public static void AddPerson(Dictionary<string, int> myDictionary)
         {
+            Console.Clear();
             Console.WriteLine("\nAdd a new person");
 
             string name = ValidName(myDictionary);
 
             int age = ValidAge(myDictionary);
             myDictionary.Add(name, age);
+            Console.WriteLine($"Name: {name} with Age: {age} has now been added");
+
+            Console.WriteLine("Press any key to return to the main menu...");
+            Console.ReadKey();
+            Console.Clear();
         }
         //Skriver ut den nuvarande listan
         public static void ShowAllPeople(Dictionary<string, int> myDictionary)
         {
-
-            Console.WriteLine("\nCurrent list:");
+            Console.Clear();
+            Console.WriteLine("\nThe people currently existing here:");
             foreach (KeyValuePair<string, int> kvp in myDictionary)
             {
                 Console.WriteLine("Name: {0} Age: {1}", kvp.Key, kvp.Value);
             }
+            Console.WriteLine("Press any key to return to the main menu...");
+            Console.ReadKey();
+            Console.Clear();
         }
         //Användaren kan uppdatera en persons ålder
         public static void UpdatePersonAge(Dictionary<string, int> myDictionary)
         {
+            Console.Clear();
             while (true)
             {
-                Console.WriteLine("\nEnter the persons name you wanna change the age of");
+                Console.WriteLine("\nWhat is the name of the person you wanna change the age of?");
                 string name = ValidName(myDictionary);
                 //Kontrollerar om namnet finns
                 if (myDictionary.ContainsKey(name))
                 {
 
-                    Console.WriteLine($"The current age for {name} is {myDictionary[name]}");
+                    Console.WriteLine($"\nThe current age for {name} is {myDictionary[name]}");
                     Console.WriteLine($"What age should {name} have instead?");
                     int age = ValidAge(myDictionary);
+                    Console.WriteLine($"The age of {name} has now been changed to {age}");
                     myDictionary[name] = age;
                     break;
                 }
@@ -108,25 +120,39 @@ namespace Uppgift_6
                 else
                 {
                     Console.WriteLine("Sorry! That name does not exist here!Try again");
+                    Console.WriteLine("\nThe people currently existing here:");
+                    foreach (KeyValuePair<string, int> kvp in myDictionary)
+                    {
+                        Console.WriteLine("Name: {0}", kvp.Key);
+                    }
                 }
             }
+            Console.WriteLine("Press any key to return to the main menu...");
+            Console.ReadKey();
+            Console.Clear();
+
         }
         //Sorterar personerna i alfabetiskt order
         public static void SortPeople(Dictionary<string, int> myDictionary)
         {
+            Console.Clear();
             var sortByName = myDictionary.OrderBy(kvp => kvp.Key);
 
-            Console.WriteLine("\nSorted list:");
+            Console.WriteLine("\nThe people are now sorted in alphabetical order:");
             //Skriver ut alla namn och deras ålder med en forach loop i alfabetisk order
             foreach (KeyValuePair<string, int> kvp in sortByName)
             {
                 Console.WriteLine("Name: {0} Age: {1} ", kvp.Key, kvp.Value);
             }
+            Console.WriteLine("Press any key to return to the main menu...");
+            Console.ReadKey();
+            Console.Clear();
         }
         //Användaren kan söka efter en person
         public static void SearchPerson(Dictionary<string, int> myDictionary)
         {
-            Console.WriteLine("\nEnter name to search:");
+            Console.Clear();
+            Console.WriteLine("\nWho do you wanna search for?");
             string searchName = ValidName(myDictionary);
             //Personen finns med
             if (myDictionary.ContainsKey(searchName))
@@ -136,8 +162,11 @@ namespace Uppgift_6
             //Personen finns inte med
             else
             {
-                Console.WriteLine($"Sorry! {searchName} does not exist here!");
+                Console.WriteLine($"Sorry! {searchName} does not exist here! Maybe you should add them to this world :)");
             }
+            Console.WriteLine("Press any key to return to the main menu...");
+            Console.ReadKey();
+            Console.Clear();
         }
 
         static void Main(string[] args)
@@ -153,7 +182,7 @@ namespace Uppgift_6
             };
             int menu = 0;
             Console.WriteLine("WELCOME TO THE WORLD OF NAMES, WE HOPE YOU ENJOY YOUR STAY HERE :)");
-            Console.WriteLine("\nOriginal list:");
+            Console.WriteLine("\nThe original people that exist here:");
             //Skriver ut alla namn & deras ålder med en foreach loop
             foreach (KeyValuePair<string, int> kvp in nameList)
             {
@@ -163,7 +192,7 @@ namespace Uppgift_6
             //skapar en switch meny med 6 olika alternativ
             do
             {
-                Console.WriteLine("\nChoose one of the options below");
+                Console.WriteLine("\nWhat do you want to do with this world? Choose an option from 1-6");
                 Console.WriteLine("1:Add person");
                 Console.WriteLine("2:Show all people");
                 Console.WriteLine("3:Update existing persons age");
@@ -206,10 +235,10 @@ namespace Uppgift_6
                         break;
                 }
             } while (menu != 0);
-
+            Console.Clear();
+            Console.WriteLine("Goodbye for now! Have a great day :)");
             Console.WriteLine("Press any key to exit....");
             Console.ReadKey();
-
         }
     }
 }

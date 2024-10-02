@@ -172,7 +172,7 @@ namespace Uppgift_6
         static void Main(string[] args)
         {
             //Skapar Dictionary
-            Dictionary<string, int> nameList = new Dictionary<string, int>
+            Dictionary<string, int> peopleDictionary = new Dictionary<string, int>
             {
                 {"Aelin",23},
                 {"Dorian",25},
@@ -184,7 +184,7 @@ namespace Uppgift_6
             Console.WriteLine("WELCOME TO THE WORLD OF NAMES, WE HOPE YOU ENJOY YOUR STAY HERE :)");
             Console.WriteLine("\nThe original people that exist here:");
             //Skriver ut alla namn & deras ålder med en foreach loop
-            foreach (KeyValuePair<string, int> kvp in nameList)
+            foreach (KeyValuePair<string, int> kvp in peopleDictionary)
             {
                 Console.WriteLine("Name: {0} Age: {1}", kvp.Key, kvp.Value);
             }
@@ -213,19 +213,19 @@ namespace Uppgift_6
                 switch (menu)
                 {
                     case 1:
-                        AddPerson(nameList);
+                        AddPerson(peopleDictionary);
                         break;
                     case 2:
-                        ShowAllPeople(nameList);
+                        ShowAllPeople(peopleDictionary);
                         break;
                     case 3:
-                        UpdatePersonAge(nameList);
+                        UpdatePersonAge(peopleDictionary);
                         break;
                     case 4:
-                        SortPeople(nameList);
+                        SortPeople(peopleDictionary);
                         break;
                     case 5:
-                        SearchPerson(nameList);
+                        SearchPerson(peopleDictionary);
                         break;
                     case 6:
                         menu = 0;
